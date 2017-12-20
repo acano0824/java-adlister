@@ -11,13 +11,18 @@ public class ViewProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
+        if (session.getAttribute("username") != null) {
 
-        if (username.equalsIgnoreCase("admin")) {
-            request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
+            String username = (String) session.getAttribute("username");
+
+            if (username.equalsIgnoreCase("admin")) {
+                request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("/login");
+            }
+
         } else {
             response.sendRedirect("/login");
         }
-
     }
 }
