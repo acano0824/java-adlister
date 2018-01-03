@@ -45,8 +45,5 @@ public class RegisterServlet extends HttpServlet {
             response.sendRedirect("/profile");
 
         }
-
-
-
     }
 }
