@@ -2,6 +2,7 @@ package com.codeup.adlister.controllers;
 
 import com.codeup.adlister.dao.DaoFactory;
 import com.codeup.adlister.models.User;
+import com.codeup.adlister.util.Password;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,9 +31,10 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        boolean validAttempt = password.equals(user.getPassword());
+        String hashedPassword = Password.hash(password);
+        boolean passwordsDoMatch = Password.check(password, hashedPassword);
 
-        if (validAttempt) {
+        if (passwordsDoMatch) {
             request.getSession().setAttribute("user", user);
             response.sendRedirect("/profile");
         } else {
